@@ -18,7 +18,7 @@ function App() {
   const [selectedNote, setSelectedNote] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingNote, setEditingNote] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // mobile sidebar toggle
+  const [sidebarOpen, setSidebarOpen] = useState(false); 
 
   // Load from localStorage
   // useEffect(() => {
@@ -95,35 +95,11 @@ function App() {
     setActiveSection(s);
     setSelectedTag("");
     setSearchQuery("");
-    setSidebarOpen(false); // close sidebar on mobile after selection
+    setSidebarOpen(false); 
   };
 
-  // Get all tags
+
   const allTags = [...new Set(notes.flatMap((n) => n.tags || []))];
-
-  // Filter notes based on section
-  // const getFilteredNotes = () => {
-  //   let filtered = notes;
-
-  //   if (activeSection === "all") filtered = notes.filter((n) => !n.trashed && !n.archived);
-  //   else if (activeSection === "pinned") filtered = notes.filter((n) => n.pinned && !n.trashed);
-  //   else if (activeSection === "archived") filtered = notes.filter((n) => n.archived && !n.trashed);
-  //   else if (activeSection === "trash") filtered = notes.filter((n) => n.trashed);
-
-  //   if (searchQuery)
-  //     filtered = filtered.filter(
-  //       (n) =>
-  //         n.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //         n.content.toLowerCase().includes(searchQuery.toLowerCase())||
-  //         n.tags.filter(tag=>tag.toLowerCase().includes(searchQuery.toLowerCase()))
-  //     );
-
-  //   if (selectedTag)
-  //     filtered = filtered.filter((n) => n.tags?.includes(selectedTag));
-
-  //   return filtered;
-  // };
-
     const getFilteredNotes = () => {
     let filtered = notes;
  
