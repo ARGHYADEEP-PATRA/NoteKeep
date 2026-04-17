@@ -31,6 +31,10 @@ function App() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
   }, [notes]);
 
+  useEffect(()=>{
+    console.log(notes);
+  },[notes])
+
   const saveNote = (noteData) => {
     if (editingNote) {
       setNotes((prev) =>
@@ -98,24 +102,47 @@ function App() {
   const allTags = [...new Set(notes.flatMap((n) => n.tags || []))];
 
   // Filter notes based on section
-  const getFilteredNotes = () => {
-    let filtered = notes;
+  // const getFilteredNotes = () => {
+  //   let filtered = notes;
 
+  //   if (activeSection === "all") filtered = notes.filter((n) => !n.trashed && !n.archived);
+  //   else if (activeSection === "pinned") filtered = notes.filter((n) => n.pinned && !n.trashed);
+  //   else if (activeSection === "archived") filtered = notes.filter((n) => n.archived && !n.trashed);
+  //   else if (activeSection === "trash") filtered = notes.filter((n) => n.trashed);
+
+  //   if (searchQuery)
+  //     filtered = filtered.filter(
+  //       (n) =>
+  //         n.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //         n.content.toLowerCase().includes(searchQuery.toLowerCase())||
+  //         n.tags.filter(tag=>tag.toLowerCase().includes(searchQuery.toLowerCase()))
+  //     );
+
+  //   if (selectedTag)
+  //     filtered = filtered.filter((n) => n.tags?.includes(selectedTag));
+
+  //   return filtered;
+  // };
+
+    const getFilteredNotes = () => {
+    let filtered = notes;
+ 
     if (activeSection === "all") filtered = notes.filter((n) => !n.trashed && !n.archived);
     else if (activeSection === "pinned") filtered = notes.filter((n) => n.pinned && !n.trashed);
     else if (activeSection === "archived") filtered = notes.filter((n) => n.archived && !n.trashed);
     else if (activeSection === "trash") filtered = notes.filter((n) => n.trashed);
-
+ 
     if (searchQuery)
       filtered = filtered.filter(
         (n) =>
           n.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          n.content.toLowerCase().includes(searchQuery.toLowerCase())
+          n.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          n.tags?.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
       );
-
+ 
     if (selectedTag)
       filtered = filtered.filter((n) => n.tags?.includes(selectedTag));
-
+ 
     return filtered;
   };
 
